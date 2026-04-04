@@ -90,8 +90,7 @@ const WhatIDo = () => {
               <h3>DEVELOP</h3>
               <h4>Description</h4>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
-                quia aliquid laboriosam ducimus sit molestiae.
+                As a Software Developer, I design, build, and maintain scalable and efficient applications. I focus on writing clean, optimized code, developing backend systems, and ensuring high performance and reliability. I work with modern frameworks and technologies to deliver user-centric solutions while continuously improving code quality and system architecture.
               </p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">
@@ -128,11 +127,10 @@ const WhatIDo = () => {
             </div>
             <div className="what-corner"></div>
             <div className="what-content-in">
-              <h3>DESIGN</h3>
+              <h3>DevOps</h3>
               <h4>Description</h4>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
-                quia aliquid laboriosam ducimus sit molestiae
+                As a DevOps Engineer, I streamline development and deployment processes by building CI/CD pipelines and automating workflows. I manage cloud infrastructure (AWS, Azure, GCP), implement containerization using Docker and Kubernetes, and ensure system scalability, reliability, and monitoring. I bridge the gap between development and operations to enable faster and more efficient releases.
               </p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">
