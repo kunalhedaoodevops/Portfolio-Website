@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { LoadingProvider } from "@/context/LoadingProvider";
 import "@/index.css";
+import "@/App.css";
 
 export const metadata: Metadata = {
   title: "Kunal Hedaoo - DevOps Engineer",
