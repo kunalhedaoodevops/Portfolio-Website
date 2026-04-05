@@ -1,10 +1,11 @@
+"use client";
+
 import "./styles/Work.css";
 import WorkImage from "./WorkImage";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(useGSAP);
 
 const Work = () => {
   useGSAP(() => {
@@ -15,24 +16,20 @@ const Work = () => {
     const getScrollAmount = () =>
       container.scrollWidth - window.innerWidth;
 
+    const distance = getScrollAmount();
     const tween = gsap.to(container, {
-      x: () => -getScrollAmount(),
+      x: distance ? -distance : 0,
       ease: "none",
-      scrollTrigger: {
-        trigger: ".work-section",
-        start: "top top",
-        end: () => `+=${getScrollAmount()}`,
-        scrub: true,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        markers: false, // change to true if debugging
+      duration: 18,
+      repeat: -1,
+      yoyo: true,
+      modifiers: {
+        x: (x) => `${parseFloat(x).toFixed(2)}px`,
       },
     });
 
     return () => {
       tween.kill();
-      ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, []);
 

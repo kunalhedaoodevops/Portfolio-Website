@@ -1,3 +1,5 @@
+"use client";
+
 import { lazy, PropsWithChildren, useEffect, useState } from "react";
 import About from "./About";
 import Career from "./Career";
@@ -13,9 +15,7 @@ import setSplitText from "./utils/splitText";
 const TechStack = lazy(() => import("./TechStack"));
 
 const MainContainer = ({ children }: PropsWithChildren) => {
-  const [isDesktopView, setIsDesktopView] = useState<boolean>(
-    window.innerWidth > 1024
-  );
+  const [isDesktopView, setIsDesktopView] = useState<boolean>(true);
 
   useEffect(() => {
     const resizeHandler = () => {
@@ -27,7 +27,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
     return () => {
       window.removeEventListener("resize", resizeHandler);
     };
-  }, [isDesktopView]);
+  }, []);
 
   return (
     <div className="container-main">

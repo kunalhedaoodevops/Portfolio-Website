@@ -5,7 +5,10 @@ gsap.registerPlugin(SplitText);
 export function initialFX() {
   document.body.style.overflowY = "auto";
   smoother.paused(false);
-  document.getElementsByTagName("main")[0].classList.add("main-active");
+
+  // Add main-active class to body instead of main element
+  document.body.classList.add("main-active");
+
   gsap.to("body", {
     backgroundColor: "#0b080c",
     duration: 0.5,

@@ -1,3 +1,5 @@
+"use client";
+
 import * as THREE from "three";
 import { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
@@ -11,7 +13,6 @@ import {
   RapierRigidBody,
 } from "@react-three/rapier";
 
-const textureLoader = new THREE.TextureLoader();
 const imageUrls = [
   "/images/react2.webp",
   "/images/next2.webp",
@@ -22,13 +23,22 @@ const imageUrls = [
   "/images/typescript.webp",
   "/images/javascript.webp",
 ];
-const textures = imageUrls.map((url) => textureLoader.load(url));
 
-const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
+// Lazy initialize these on client only
+let textureLoaderInstance: THREE.TextureLoader | null = null;
+let textures: THREE.Texture[] = [];
+let sphereGeometry: THREE.SphereGeometry | null = null;
+let spheres: Array<{ scale: number }> | null = null;
 
-const spheres = [...Array(30)].map(() => ({
-  scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
-}));
+function initializeThreeAssets() {
+  if (!textureLoaderInstance) {
+    textureLoaderInstance = new THREE.TextureLoader();
+    sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
+    spheres = [...Array(30)].map(() => ({
+      scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
+    }));
+  }
+}
 
 type SphereProps = {
   vec?: THREE.Vector3;
@@ -83,7 +93,7 @@ function SphereGeo({
         castShadow
         receiveShadow
         scale={scale}
-        geometry={sphereGeometry}
+        geometry={sphereGeometry!}
         material={material}
         rotation={[0.3, 1, 1]}
       />
@@ -126,8 +136,28 @@ function Pointer({ vec = new THREE.Vector3(), isActive }: PointerProps) {
 
 const TechStack = () => {
   const [isActive, setIsActive] = useState(false);
+  const [texturesLoaded, setTexturesLoaded] = useState(false);
 
   useEffect(() => {
+    // Initialize Three.js assets on client mount
+    initializeThreeAssets();
+
+    // Load textures if not already loaded
+    if (textureLoaderInstance && textures.length === 0) {
+      const loadingPromises = imageUrls.map(url => {
+        return new Promise<void>((resolve) => {
+          textureLoaderInstance!.load(url, (texture) => {
+            textures.push(texture);
+            resolve();
+          });
+        });
+      });
+
+      Promise.all(loadingPromises).then(() => {
+        setTexturesLoaded(true);
+      });
+    }
+
     const handleScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
       const threshold = document
@@ -150,8 +180,9 @@ const TechStack = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [texturesLoaded]);
   const materials = useMemo(() => {
+    if (!texturesLoaded || textures.length === 0) return [];
     return textures.map(
       (texture) =>
         new THREE.MeshPhysicalMaterial({
@@ -164,49 +195,53 @@ const TechStack = () => {
           clearcoat: 0.1,
         })
     );
-  }, []);
+  }, [texturesLoaded]);
 
   return (
     <div className="techstack">
       <h2> My Techstack</h2>
 
-      <Canvas
-        shadows
-        gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
-        camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
-        onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
-        className="tech-canvas"
-      >
-        <ambientLight intensity={1} />
-        <spotLight
-          position={[20, 20, 25]}
-          penumbra={1}
-          angle={0.2}
-          color="white"
-          castShadow
-          shadow-mapSize={[512, 512]}
-        />
-        <directionalLight position={[0, 5, -4]} intensity={2} />
-        <Physics gravity={[0, 0, 0]}>
-          <Pointer isActive={isActive} />
-          {spheres.map((props, i) => (
-            <SphereGeo
-              key={i}
-              {...props}
-              material={materials[Math.floor(Math.random() * materials.length)]}
-              isActive={isActive}
-            />
-          ))}
-        </Physics>
-        <Environment
-          files="/models/char_enviorment.hdr"
-          environmentIntensity={0.5}
-          environmentRotation={[0, 4, 2]}
-        />
-        <EffectComposer enableNormalPass={false}>
-          <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
-        </EffectComposer>
-      </Canvas>
+      {!texturesLoaded ? (
+        <div className="tech-loading">Loading tech stack...</div>
+      ) : (
+        <Canvas
+          shadows
+          gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
+          camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
+          onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
+          className="tech-canvas"
+        >
+          <ambientLight intensity={1} />
+          <spotLight
+            position={[20, 20, 25]}
+            penumbra={1}
+            angle={0.2}
+            color="white"
+            castShadow
+            shadow-mapSize={[512, 512]}
+          />
+          <directionalLight position={[0, 5, -4]} intensity={2} />
+          <Physics gravity={[0, 0, 0]}>
+            <Pointer isActive={isActive} />
+            {spheres && spheres.map((props, i) => (
+              <SphereGeo
+                key={i}
+                {...props}
+                material={materials[Math.floor(Math.random() * materials.length)]}
+                isActive={isActive}
+              />
+            ))}
+          </Physics>
+          <Environment
+            files="/models/char_enviorment.hdr"
+            environmentIntensity={0.5}
+            environmentRotation={[0, 4, 2]}
+          />
+          <EffectComposer enableNormalPass={false}>
+            <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
+          </EffectComposer>
+        </Canvas>
+      )}
     </div>
   );
 };

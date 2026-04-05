@@ -1,3 +1,5 @@
+"use client";
+
 import {
   createContext,
   PropsWithChildren,
@@ -24,12 +26,23 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
     setIsLoading,
     setLoading,
   };
-  useEffect(() => {}, [loading]);
+
+  useEffect(() => {
+    // Auto-complete loading after 3 seconds if not manually set
+    const timer = setTimeout(() => {
+      setLoading(100);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <LoadingContext.Provider value={value as LoadingType}>
       {isLoading && <Loading percent={loading} />}
-      <main className="main-body">{children}</main>
+      {children}
     </LoadingContext.Provider>
   );
 };
