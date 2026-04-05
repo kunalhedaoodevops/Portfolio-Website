@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: "export",
+    distDir: "dist",
     webpack: (config, { isServer }) => {
         config.resolve.fallback = {
             ...config.resolve.fallback,
