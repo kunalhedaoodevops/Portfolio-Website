@@ -18,6 +18,37 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
+}
+
+.work-nav {
+  position: absolute;
+  top: 110px;
+  right: 0;
+  display: flex;
+  gap: 12px;
+  z-index: 1;
+}
+
+.work-nav-button {
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.work-nav-button:hover {
+  background: rgba(194, 164, 255, 0.95);
+  transform: scale(1.05);
 }
 
 /* 🔥 MAIN FIX */
@@ -78,4 +109,44 @@
 .work-image img {
   max-width: 100%;
   max-height: 300px;
+}
+
+@media screen and (max-width: 900px) {
+  .work-section {
+    min-height: auto;
+  }
+
+  .work-flex {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .work-box {
+    width: 100%;
+    padding: 32px;
+    border-right: none;
+    border-bottom: 1px solid #363636;
+  }
+
+  .work-box:nth-child(even) {
+    flex-direction: column;
+  }
+
+  .work-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .work-title > div {
+    text-align: left;
+  }
+
+  .work-title h3 {
+    font-size: 32px;
+  }
+
+  .work-nav {
+    display: none;
+  }
 }

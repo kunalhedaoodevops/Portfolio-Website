@@ -29,3 +29,4 @@ backup/
 
 #custom
 .history
+*-lock.json
