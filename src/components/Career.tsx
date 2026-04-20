@@ -2,7 +2,7 @@ import "./styles/Career.css";
 
 const Career = () => {
   return (
-    <div className="career-section section-container">
+    <div className="career-section section-container" id="career">
       <div className="career-container">
         <h2>
           My career <span>&</span>
@@ -41,15 +41,13 @@ const Career = () => {
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Position In Company</h4>
-                <h5>Company Name</h5>
+                <h4>Software Engineer -Devops Engineer</h4>
+                <h5>Intellore System Pvt Ltd</h5>
               </div>
               <h3>NOW</h3>
             </div>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-              labore sit non ipsum temporibus quidem, deserunt eaque officiis
-              mollitia ratione suscipit repellat.
+              Responsible for designing and managing Jenkins CI/CD pipelines to enable automated deployments, maintaining servers and databases for high performance and security, and developing Python scripts for automation tasks like backups and log cleanup. Implemented monitoring and security practices, built scalable cloud architectures (AWS, DigitalOcean), and collaborated across teams to improve system reliability and performance.
             </p>
           </div>
         </div>

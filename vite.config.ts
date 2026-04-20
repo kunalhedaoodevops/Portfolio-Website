@@ -6,7 +6,8 @@ export default defineConfig({
   server: {
     host: true, // allow external access
     allowedHosts: [
-      "kunaltechsolutions.indevs.in"
+      "kunaltechsolutions.indevs.in",
+        "local.kunaltechsolutions.indevs.in"
     ]
   }
 });
