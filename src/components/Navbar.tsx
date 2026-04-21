@@ -44,7 +44,7 @@ const Navbar = () => {
       <div className="header">
         {/* ✅ LOGO FIX */}
         <a href="/#" className="navbar-title" data-cursor="disable">
-          <img src="/logo/logo_new.png" alt="logo" />
+          <img src="/logo/logo_new.webp" alt="logo" />
           {/* <span>Kunal Tech</span> */}
         </a>
         <a
