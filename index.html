@@ -16,11 +16,14 @@
     <meta name="author" content="Kunal Hedaoo" />
     <meta name="robots" content="index, follow" />
 
+    <link rel="preload" href="/src/main.jsx" as="script">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://kunaltechsolutions.indevs.in/" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="logo/logo_new.png" />
+    <link rel="icon" type="image/png" href="logo/logo_new.webp" />
 
     <!-- Open Graph (Facebook, LinkedIn) -->
     <meta property="og:type" content="website" />
@@ -74,7 +77,7 @@
 
 <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/main.tsx" defer></script>
 </body>
 
 </html>

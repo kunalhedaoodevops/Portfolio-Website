@@ -1,4 +1,5 @@
-import { lazy, PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
+import React, { Suspense } from "react";
 import About from "./About";
 import Career from "./Career";
 import Contact from "./Contact";
@@ -10,7 +11,7 @@ import WhatIDo from "./WhatIDo";
 // import Work from "./Work";
 import setSplitText from "./utils/splitText";
 
-const TechStack = lazy(() => import("./TechStack"));
+const TechStack = React.lazy(() => import("./TechStack"));
 
 const MainContainer = ({ children }: PropsWithChildren) => {
   const [isDesktopView, setIsDesktopView] = useState<boolean>(
@@ -42,17 +43,15 @@ const MainContainer = ({ children }: PropsWithChildren) => {
             <About />
             <WhatIDo />
             <Career />
-            <TechStack />
+
+              <Suspense fallback={<div>Loading....</div>}>
+                <TechStack />
+              </Suspense>
+        
             {/* <Work /> */}
             <Contact />
 
 
-            {/* <TechStack />
-            {isDesktopView && (
-              <Suspense fallback={<div>Loading....</div>}>
-                <TechStack />
-              </Suspense>
-            )} */}
 
           </div>
 
