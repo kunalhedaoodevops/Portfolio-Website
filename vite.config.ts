@@ -9,7 +9,7 @@ export default defineConfig({
         visualizer({ open: true }),
         VitePWA({
             registerType: "autoUpdate",
-            includeAssets: ["favicon.ico", "robots.txt", "sitemap.xml", "Resume.pdf"],
+            includeAssets: ["favicon.ico", "robots.txt", "sitemap.xml", "_redirects", "Resume.pdf"],
             manifest: {
                 name: "Kunal Hedaoo - Portfolio",
                 short_name: "Kunal Portfolio",
